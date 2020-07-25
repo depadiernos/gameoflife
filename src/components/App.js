@@ -9,8 +9,8 @@ import Cell from "./Cell";
 const App = () => {
   const [size, setSize] = useState(50);
   const [population, setPopulation] = useState([]);
-  const [presetName, setPresetName] = useState("selected");
   const [running, setRunning] = useState(false);
+  const [speed, setSpeed] = useState(0)
   const [generations, setGenerations] = useState(0);
   const [grid, setGrid] = useState();
   const gridRef = useRef();
@@ -36,8 +36,7 @@ const App = () => {
   }, [size]);
 
   const handlePreset = (e) => {
-    setPopulation([...presets[e.target.value]]);
-    setPresetName(e.target.value);
+    setPopulation([...presets(e.target.value, size)]);
   };
 
   return (
@@ -51,7 +50,14 @@ const App = () => {
         >
           {!running ? `Start` : `Stop`}
         </button>
-        <button style={style}>Clear</button>
+        <button
+          style={style}
+          onClick={() => {
+            setPopulation([]);
+          }}
+        >
+          Clear
+        </button>
       </div>
       <div>
         <input
@@ -76,6 +82,7 @@ const App = () => {
           <option value="blinker">Blinker</option>
         </select>
       </div>
+      <h2>Generation {generations}</h2>
       <div ref={gridRef}>
         {grid &&
           grid.map((row, x) => {
@@ -85,7 +92,6 @@ const App = () => {
                   row.map((_, y) => {
                     return (
                       <Cell
-                        presetName={presetName}
                         gridRef={gridRef}
                         size={size}
                         key={`${x}-${y}`}
