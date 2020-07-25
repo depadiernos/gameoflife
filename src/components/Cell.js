@@ -2,7 +2,7 @@ import React from "react";
 import checkState from "../utils/checkState";
 
 const Cell = (props) => {
-  const { gridRef, pos, population, setPopulation, size } = props;
+  const { gridRef, pos, population, setPopulation, size, running } = props;
 
   const style = {
     backgroundColor: `${checkState(population, pos) ? "black" : "white"}`,
@@ -26,7 +26,7 @@ const Cell = (props) => {
   };
 
 
-  return <div style={style} onClick={onClick}></div>;
+  return <div style={style} onClick={!running? onClick : null}></div>;
 };
 
 export default Cell;
