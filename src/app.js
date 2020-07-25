@@ -2,26 +2,31 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 
 const Cell = (props) => {
+  
+  const checkState = (array, pos) => {
+    return array.some((cell) => cell.x === pos.x && cell.y === pos.y);
+  };
+
+  const onClick = () => {
+    props.setLive(
+      checkState(props.live, props.pos)
+        ? props.live.filter(
+            (pos) => pos.x != props.pos.x && pos.y != props.pos.y
+          )
+        : [...props.live, props.pos]
+    );
+  };
+
   const style = {
-    backgroundColor: props.live.includes(props.pos) ? "black" : "white",
+    backgroundColor: checkState(props.live, props.pos) ? "black" : "white",
     height: `${550 / props.size}px`,
     width: `${550 / props.size}px`,
     border: "1px solid black",
     display: "inline-block",
     textAlign: "center",
   };
-  return (
-    <div
-      style={style}
-      onClick={() => {
-        props.setLive(
-          props.live.includes(props.pos)
-            ? props.live.filter((pos) => pos != props.pos)
-            : [...props.live, props.pos]
-        );
-      }}
-    ></div>
-  );
+
+  return <div style={style} onClick={onClick}></div>;
 };
 
 const App = () => {
@@ -93,7 +98,7 @@ const App = () => {
                     <Cell
                       size={size}
                       key={`${x}-${y}`}
-                      pos={`${x},${y}`}
+                      pos={{ x, y }}
                       live={live}
                       setLive={setLive}
                     />
