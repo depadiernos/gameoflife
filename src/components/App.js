@@ -11,6 +11,7 @@ const App = () => {
   const [population, setPopulation] = useState([]);
   const [running, setRunning] = useState(false);
   const [speed, setSpeed] = useState(20);
+  const [preset, setPreset] = useState("selected")
   const [generations, setGenerations] = useState(0);
   const [grid, setGrid] = useState();
   const [show, setShow] = useState(false);
@@ -42,23 +43,25 @@ const App = () => {
 
   useEffect(() => {
     if (running) {
+      if (population.length < 1) {
+        setRunning(false);
+      }
       const run = setTimeout(() => {
         const newPopulation = population.map((cell) =>
           expandPopulation(cell, size)
         );
         const newGeneration = nextGeneration(newPopulation.flat(), population);
         setPopulation(newGeneration);
-        setGenerations(generations+1)
-        if (population.length < 1) {
-          setRunning(false);
-        }
+        setGenerations(generations + 1);
       }, speed);
       return () => clearTimeout(run);
     }
   });
 
   const handlePreset = (e) => {
+    setPreset(e.target.value)
     setPopulation([...presets(e.target.value, size)]);
+    setGenerations(0)
   };
 
   const handleStart = () => {
@@ -92,17 +95,19 @@ const App = () => {
             <button
               style={style}
               onClick={() => {
+                setPreset("selected")
                 setPopulation([]);
+                setGenerations(0)
               }}
             >
               Clear
             </button>
           </div>
           <div style={{ ...controlsStyle }}>
-            <label style={{marginLeft: "5px"}}>
+            <label style={{ marginLeft: "5px" }}>
               Board Size
               <input
-                style={{ ...style, width: "50px", marginLeft: "10px"}}
+                style={{ ...style, width: "50px", marginLeft: "10px" }}
                 type="number"
                 value={size}
                 onChange={(e) => {
@@ -110,7 +115,7 @@ const App = () => {
                 }}
               />
             </label>
-            <label style={{marginLeft: "10px"}}>
+            <label style={{ marginLeft: "10px" }}>
               Speed
               <input
                 type="range"
@@ -125,10 +130,11 @@ const App = () => {
           <select
             style={{ ...style, ...controlsStyle }}
             id="preset"
+            value={preset}
             onChange={(e) => handlePreset(e)}
             name="presets"
           >
-            <option value="selected" defaultValue="selected">
+            <option value="selected">
               Select a Preset
             </option>
             <option value="glider">Glider</option>
