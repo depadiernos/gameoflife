@@ -1,21 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import checkState from "../utils/checkState";
 
 const Cell = (props) => {
   const { gridRef, pos, population, setPopulation, size, running } = props;
 
-  const minSize = () => window.innerWidth < window.innerHeight ? window.innerWidth -10 : window.innerHeight - gridRef.current.offsetTop
+  const [gridSize, setGridSize] = useState();
+  const minSize = () =>
+    window.innerWidth < window.innerHeight
+      ? setGridSize(window.innerWidth - 30)
+      : setGridSize(window.innerHeight - gridRef.current.offsetTop)
+
+
+  useEffect(()=>{
+    window.addEventListener("resize", minSize)
+    minSize()
+  },[])
 
   const style = {
     backgroundColor: `${checkState(population, pos) ? "black" : "white"}`,
     boxSizing: "border-box",
-    height: `${(minSize() - 10) / size}`,
-    width: `${(minSize() - 10) / size}`,
-    border: "1px solid black",
+    height: `${(gridSize - 10) / size}`,
+    width: `${(gridSize - 10) / size}`,
+    border: "1px solid gray",
     display: "inline-block",
     textAlign: "center",
   };
-  
+
   const onClick = () => {
     setPopulation(
       checkState(population, pos)
@@ -27,8 +37,7 @@ const Cell = (props) => {
     );
   };
 
-
-  return <div style={style} onClick={!running? onClick : null}></div>;
+  return <div style={style} onClick={!running ? onClick : null}></div>;
 };
 
 export default Cell;
