@@ -4,7 +4,7 @@ import checkState from "../utils/checkState";
 const Cell = (props) => {
   const { gridRef, pos, population, setPopulation, size, running } = props;
 
-  const minSize = () => window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight - gridRef.current.offsetTop
+  const minSize = () => window.innerWidth < window.innerHeight ? window.innerWidth -10 : window.innerHeight - gridRef.current.offsetTop
 
   const style = {
     backgroundColor: `${checkState(population, pos) ? "black" : "white"}`,
