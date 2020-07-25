@@ -5,6 +5,7 @@ import expandPopulation from "../utils/expandPopulation";
 import checkState from "../utils/checkState";
 import presets from "../utils/presets";
 import Cell from "./Cell";
+import About from "./About";
 
 const App = () => {
   const [size, setSize] = useState(50);
@@ -13,15 +14,20 @@ const App = () => {
   const [speed, setSpeed] = useState(0);
   const [generations, setGenerations] = useState(0);
   const [grid, setGrid] = useState();
+  const [show, setShow] = useState(false);
   const gridRef = useRef();
 
   const style = {
     boxSizing: "border-box",
     height: "30px",
-    width: "150px",
-    margin: "5px",
+    width: "49%",
+    margin: "2px",
     WebkitAppearance: "none",
     MozAppearance: "textfield",
+  };
+
+  const controlsStyle = {
+    width: "400px",
   };
 
   useEffect(() => {
@@ -39,57 +45,88 @@ const App = () => {
     setPopulation([...presets(e.target.value, size)]);
   };
 
+  const handleStart = () => {
+    
+  }
+
   return (
     <div style={{ height: "100%" }}>
-      <div>
-        <button
-          style={style}
-          onClick={() => {
-            setRunning(!running);
+      <About show={show} setShow={setShow} />
+      <header style={{ display: "flex" }}>
+        <div
+          onClick={() => setShow(!show)}
+          style={{
+            cursor: "pointer",
+            border: "1px solid black",
+            height: "100px",
+            width: "100px",
+            marginRight: "10px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          {!running ? `Start` : `Stop`}
-        </button>
-        <button
-          style={style}
-          onClick={() => {
-            setPopulation([]);
-          }}
-        >
-          Clear
-        </button>
-      </div>
-      <div>
-        <input
-          style={{ ...style, width: "50px" }}
-          type="number"
-          value={size}
-          onChange={(e) => {
-            setSize(parseInt(e.target.value));
-          }}
-        />
-        <input
-          type="range"
-          style={{ height: "9px", direction: "rtl" }}
-          value={speed}
-          min="0"
-          max="300"
-          onChange={(e) => setSpeed(parseInt(e.target.value))}
-        />
-      </div>
-      <select
-        style={style}
-        id="preset"
-        onChange={(e) => handlePreset(e)}
-        name="presets"
-      >
-        <option value="selected" defaultValue="selected">
-          Select a Preset
-        </option>
-        <option value="glider">Glider</option>
-        <option value="spaceship">Spaceship</option>
-        <option value="blinker">Blinker</option>
-      </select>
+          <span style={{ textAlign: "center" }}>Conway's Game of Life</span>
+        </div>
+        <nav>
+          <div style={controlsStyle}>
+            <button
+              style={style}
+              onClick={() => {
+                setRunning(!running);
+              }}
+            >
+              {!running ? `Start` : `Stop`}
+            </button>
+            <button
+              style={style}
+              onClick={() => {
+                setPopulation([]);
+              }}
+            >
+              Clear
+            </button>
+          </div>
+          <div style={{ ...controlsStyle }}>
+            <label>
+              Board Size
+              <input
+                style={{ ...style, width: "50px" }}
+                type="number"
+                value={size}
+                onChange={(e) => {
+                  setSize(parseInt(e.target.value));
+                }}
+              />
+            </label>
+            <label>
+              Speed
+              <input
+                type="range"
+                style={{ height: "9px", direction: "rtl" }}
+                value={speed}
+                min="0"
+                max="300"
+                onChange={(e) => setSpeed(parseInt(e.target.value))}
+              />
+            </label>
+          </div>
+          <select
+            style={{ ...style, ...controlsStyle }}
+            id="preset"
+            onChange={(e) => handlePreset(e)}
+            name="presets"
+          >
+            <option value="selected" defaultValue="selected">
+              Select a Preset
+            </option>
+            <option value="glider">Glider</option>
+            <option value="spaceship">Spaceship</option>
+            <option value="blinker">Blinker</option>
+          </select>
+        </nav>
+      </header>
+
       <section>
         <h2>Generation {generations}</h2>
         <div ref={gridRef}>
