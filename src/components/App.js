@@ -48,6 +48,7 @@ const App = () => {
         );
         const newGeneration = nextGeneration(newPopulation.flat(), population);
         setPopulation(newGeneration);
+        setGenerations(generations+1)
         if (population.length < 1) {
           setRunning(false);
         }
@@ -98,10 +99,10 @@ const App = () => {
             </button>
           </div>
           <div style={{ ...controlsStyle }}>
-            <label>
+            <label style={{marginLeft: "5px"}}>
               Board Size
               <input
-                style={{ ...style, width: "50px" }}
+                style={{ ...style, width: "50px", marginLeft: "10px"}}
                 type="number"
                 value={size}
                 onChange={(e) => {
@@ -109,7 +110,7 @@ const App = () => {
                 }}
               />
             </label>
-            <label>
+            <label style={{marginLeft: "10px"}}>
               Speed
               <input
                 type="range"
