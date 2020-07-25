@@ -2,10 +2,10 @@
   "name": "gameoflife",
   "version": "1.0.0",
   "description": "",
-  "main": "index.html",
+  "main":"dist/index.html",
   "scripts": {
     "start": "parcel ./src/index.html",
-    "build": "parcel build --dist-dir ./dist/ ./src/index.html"
+    "build": "parcel build ./src/index.html"
   },
   "repository": {
     "type": "git",
