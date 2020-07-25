@@ -1,0 +1,26 @@
+{
+  "name": "gameoflife",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel ./src/index.html",
+    "build": "parcel build ./src/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/depadiernos/gameoflife.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/depadiernos/gameoflife/issues"
+  },
+  "homepage": "https://github.com/depadiernos/gameoflife#readme",
+  "dependencies": {
+    "parcel": "^2.0.0-beta.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}
