@@ -1,20 +1,35 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 
+const Cell = (props) => {
+  const style = {
+    backgroundColor: props.live.includes(props.pos) ? "black" : "white",
+    height: `${500 / props.size}px`,
+    width: `${500 / props.size}px`,
+    border: "1px solid black",
+    display: "inline-block",
+    textAlign: "center",
+  };
+  return (
+    <div
+      style={style}
+      onClick={() => {
+        props.setLive(
+          props.live.includes(props.pos)
+            ? props.live.filter((pos) => pos != props.pos)
+            : [...props.live, props.pos]
+        );
+      }}
+    ></div>
+  );
+};
+
 const App = () => {
   const [size, setSize] = useState(30);
   const [live, setLive] = useState([]);
   const [running, setRunning] = useState(false);
   const [generations, setGenerations] = useState(0);
   const [grid, setGrid] = useState();
-
-  const style = {
-    height: `${500 / size}px`,
-    width: `${500 / size}px`,
-    border: "1px solid black",
-    display: "inline-block",
-    textAlign: "center",
-  };
 
   useEffect(() => {
     let arr = new Array(size);
@@ -49,7 +64,7 @@ const App = () => {
           }}
         />
         <select id="preset" name="presets">
-          <option selected="selected">Select a Preset</option>
+          <option defaultValue="selected">Select a Preset</option>
           <option value="glider">Volvo</option>
           <option value="spaceship">Saab</option>
           <option value="cross">Fiat</option>
@@ -65,11 +80,13 @@ const App = () => {
               {row &&
                 row.map((_, y) => {
                   return (
-                    <span
-                      style={style}
+                    <Cell
+                      size={size}
                       key={`${x}-${y}`}
-                      id={`${x}-${y}`}
-                    ></span>
+                      pos={`${x},${y}`}
+                      live={live}
+                      setLive={setLive}
+                    />
                   );
                 })}
             </div>
