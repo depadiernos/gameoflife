@@ -11,7 +11,7 @@ const App = () => {
   const [size, setSize] = useState(50);
   const [population, setPopulation] = useState([]);
   const [running, setRunning] = useState(false);
-  const [speed, setSpeed] = useState(5);
+  const [speed, setSpeed] = useState(20);
   const [generations, setGenerations] = useState(0);
   const [grid, setGrid] = useState();
   const [show, setShow] = useState(false);
@@ -113,8 +113,8 @@ const App = () => {
                 type="range"
                 style={{ height: "9px", direction: "rtl" }}
                 value={speed}
-                min="5"
-                max="500"
+                min="20"
+                max="200"
                 onChange={(e) => setSpeed(parseInt(e.target.value))}
               />
             </label>
