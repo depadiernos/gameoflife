@@ -4,8 +4,8 @@ import ReactDOM from "react-dom";
 const Cell = (props) => {
   const style = {
     backgroundColor: props.live.includes(props.pos) ? "black" : "white",
-    height: `${500 / props.size}px`,
-    width: `${500 / props.size}px`,
+    height: `${600 / props.size}px`,
+    width: `${600 / props.size}px`,
     border: "1px solid black",
     display: "inline-block",
     textAlign: "center",
@@ -25,11 +25,20 @@ const Cell = (props) => {
 };
 
 const App = () => {
-  const [size, setSize] = useState(30);
+  const [size, setSize] = useState(50);
   const [live, setLive] = useState([]);
   const [running, setRunning] = useState(false);
   const [generations, setGenerations] = useState(0);
   const [grid, setGrid] = useState();
+
+  const style = {
+    boxSizing: "border-box",
+    height: "30px",
+    margin: "5px",
+    width: "200px",
+    WebkitAppearance: "none",
+    MozAppearance: "textfield",
+  };
 
   useEffect(() => {
     let arr = new Array(size);
@@ -54,16 +63,16 @@ const App = () => {
         {!running ? `Start` : `Stop`}
       </button>
       <button>Clear</button> <br />
-      <br />
       <div>
         <input
+          style={style}
           type="number"
           value={size}
           onChange={(e) => {
             setSize(parseInt(e.target.value));
           }}
         />
-        <select id="preset" name="presets">
+        <select style={style} id="preset" name="presets">
           <option defaultValue="selected">Select a Preset</option>
           <option value="glider">Volvo</option>
           <option value="spaceship">Saab</option>
@@ -71,7 +80,6 @@ const App = () => {
           <option value="blaster">Audi</option>
         </select>
       </div>
-      <br />
       <br />
       {grid &&
         grid.map((row, x) => {
