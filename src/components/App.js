@@ -11,7 +11,7 @@ const App = () => {
   const [population, setPopulation] = useState([]);
   const [running, setRunning] = useState(false);
   const [speed, setSpeed] = useState(20);
-  const [preset, setPreset] = useState("selected")
+  const [preset, setPreset] = useState("selected");
   const [generations, setGenerations] = useState(0);
   const [grid, setGrid] = useState();
   const [show, setShow] = useState(false);
@@ -31,14 +31,16 @@ const App = () => {
   };
 
   useEffect(() => {
-    let arr = new Array(size);
-    for (let i = 0; i < arr.length; i++) {
-      arr[i] = new Array(size);
-      for (let j = 0; j < size; j++) {
-        arr[i][j] = 0;
+    if (size > 0) {
+      let arr = new Array(size);
+      for (let i = 0; i < arr.length; i++) {
+        arr[i] = new Array(size);
+        for (let j = 0; j < size; j++) {
+          arr[i][j] = 0;
+        }
       }
+      setGrid(arr);
     }
-    setGrid(arr);
   }, [size]);
 
   useEffect(() => {
@@ -59,9 +61,9 @@ const App = () => {
   });
 
   const handlePreset = (e) => {
-    setPreset(e.target.value)
+    setPreset(e.target.value);
     setPopulation([...presets(e.target.value, size)]);
-    setGenerations(0)
+    setGenerations(0);
   };
 
   const handleStart = () => {
@@ -95,9 +97,9 @@ const App = () => {
             <button
               style={style}
               onClick={() => {
-                setPreset("selected")
+                setPreset("selected");
                 setPopulation([]);
-                setGenerations(0)
+                setGenerations(0);
               }}
             >
               Clear
@@ -109,7 +111,7 @@ const App = () => {
               <input
                 style={{ ...style, width: "50px", marginLeft: "10px" }}
                 type="number"
-                value={size}
+                value={JSON.stringify(size)}
                 onChange={(e) => {
                   setSize(parseInt(e.target.value));
                 }}
@@ -134,9 +136,7 @@ const App = () => {
             onChange={(e) => handlePreset(e)}
             name="presets"
           >
-            <option value="selected">
-              Select a Preset
-            </option>
+            <option value="selected">Select a Preset</option>
             <option value="glider">Glider</option>
             <option value="spaceship">Spaceship</option>
             <option value="blinker">Blinker</option>
