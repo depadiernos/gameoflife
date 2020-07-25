@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import nextGeneration from "../utils/nextGeneration";
 import expandPopulation from "../utils/expandPopulation";
-import checkState from "../utils/checkState";
 import presets from "../utils/presets";
 import Cell from "./Cell";
 import About from "./About";
@@ -49,6 +48,9 @@ const App = () => {
         );
         const newGeneration = nextGeneration(newPopulation.flat(), population);
         setPopulation(newGeneration);
+        if (population.length < 1) {
+          setRunning(false);
+        }
       }, speed);
       return () => clearTimeout(run);
     }
@@ -146,6 +148,7 @@ const App = () => {
                     row.map((_, y) => {
                       return (
                         <Cell
+                          running={running}
                           gridRef={gridRef}
                           size={size}
                           key={`${x}-${y}`}
