@@ -4,8 +4,8 @@ import ReactDOM from "react-dom";
 const Cell = (props) => {
   const style = {
     backgroundColor: props.live.includes(props.pos) ? "black" : "white",
-    height: `${600 / props.size}px`,
-    width: `${600 / props.size}px`,
+    height: `${550 / props.size}px`,
+    width: `${550 / props.size}px`,
     border: "1px solid black",
     display: "inline-block",
     textAlign: "center",
@@ -55,14 +55,17 @@ const App = () => {
 
   return (
     <div>
-      <button
-        onClick={() => {
-          setRunning(!running);
-        }}
-      >
-        {!running ? `Start` : `Stop`}
-      </button>
-      <button>Clear</button> <br />
+      <div>
+        <button
+          style={style}
+          onClick={() => {
+            setRunning(!running);
+          }}
+        >
+          {!running ? `Start` : `Stop`}
+        </button>
+        <button style={style}>Clear</button>
+      </div>
       <div>
         <input
           style={style}
@@ -80,7 +83,6 @@ const App = () => {
           <option value="blaster">Audi</option>
         </select>
       </div>
-      <br />
       {grid &&
         grid.map((row, x) => {
           return (
