@@ -1,18 +1,29 @@
-const nextGeneration = (population) => {
-    const newPopulation = population.reduce((acc, index) => {
-      if (typeof acc[index] == "undefined") {
-        acc[index] = 1;
-      } else {
-        acc[index] += 1;
+const nextGeneration = (population, oldPopulation) => {
+  const newPopulation = population.reduce((acc, object) => {
+    const stringObj = JSON.stringify(object);
+    if (typeof acc[stringObj] == "undefined") {
+      acc[stringObj] = 1;
+    } else {
+      acc[stringObj] += 1;
+    }
+    return acc;
+  }, {});
+  const newGeneration = [];
+  Object.keys(newPopulation).forEach((key) => {
+    let isIncluded = false;
+    for (let obj of oldPopulation) {
+      if (JSON.stringify(obj) === key) {
+        isIncluded = true;
       }
-      return acc;
-    }, {});
-    return Object.keys(newPopulation).filter((key) => {
-      return (
-        newPopulation[key] === 3 ||
-        (newPopulation[key] === 4 && population.include(key))
-      );
-    });
-  };
+    }
+    if (
+      newPopulation[key] === 3 ||
+      (newPopulation[key] === 4 && isIncluded === true)
+    ) {
+      newGeneration.push(JSON.parse(key));
+    }
+  });
+  return newGeneration;
+};
 
-  export default nextGeneration
+export default nextGeneration;

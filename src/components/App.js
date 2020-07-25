@@ -11,7 +11,7 @@ const App = () => {
   const [size, setSize] = useState(50);
   const [population, setPopulation] = useState([]);
   const [running, setRunning] = useState(false);
-  const [speed, setSpeed] = useState(0);
+  const [speed, setSpeed] = useState(5);
   const [generations, setGenerations] = useState(0);
   const [grid, setGrid] = useState();
   const [show, setShow] = useState(false);
@@ -41,13 +41,26 @@ const App = () => {
     setGrid(arr);
   }, [size]);
 
+  useEffect(() => {
+    if (running) {
+      const run = setTimeout(() => {
+        const newPopulation = population.map((cell) =>
+          expandPopulation(cell, size)
+        );
+        const newGeneration = nextGeneration(newPopulation.flat(), population);
+        setPopulation(newGeneration);
+      }, speed);
+      return () => clearTimeout(run);
+    }
+  });
+
   const handlePreset = (e) => {
     setPopulation([...presets(e.target.value, size)]);
   };
 
   const handleStart = () => {
-    
-  }
+    setRunning(!running);
+  };
 
   return (
     <div style={{ height: "100%" }}>
@@ -70,12 +83,7 @@ const App = () => {
         </div>
         <nav>
           <div style={controlsStyle}>
-            <button
-              style={style}
-              onClick={() => {
-                setRunning(!running);
-              }}
-            >
+            <button style={style} onClick={handleStart}>
               {!running ? `Start` : `Stop`}
             </button>
             <button
@@ -105,8 +113,8 @@ const App = () => {
                 type="range"
                 style={{ height: "9px", direction: "rtl" }}
                 value={speed}
-                min="0"
-                max="300"
+                min="5"
+                max="500"
                 onChange={(e) => setSpeed(parseInt(e.target.value))}
               />
             </label>
