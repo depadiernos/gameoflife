@@ -4,11 +4,13 @@ import checkState from "../utils/checkState";
 const Cell = (props) => {
   const { gridRef, pos, population, setPopulation, size, running } = props;
 
+  const minSize = () => window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight
+
   const style = {
     backgroundColor: `${checkState(population, pos) ? "black" : "white"}`,
     boxSizing: "border-box",
-    height: `${(window.innerHeight - gridRef.current.offsetTop - 10) / size}`,
-    width: `${(window.innerHeight - gridRef.current.offsetTop - 10) / size}`,
+    height: `${(minSize() - gridRef.current.offsetTop - 10) / size}`,
+    width: `${(minSize() - gridRef.current.offsetTop - 10) / size}`,
     border: "1px solid black",
     display: "inline-block",
     textAlign: "center",
