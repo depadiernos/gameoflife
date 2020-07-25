@@ -10,7 +10,7 @@ const App = () => {
   const [size, setSize] = useState(50);
   const [population, setPopulation] = useState([]);
   const [running, setRunning] = useState(false);
-  const [speed, setSpeed] = useState(0)
+  const [speed, setSpeed] = useState(0);
   const [generations, setGenerations] = useState(0);
   const [grid, setGrid] = useState();
   const gridRef = useRef();
@@ -18,8 +18,8 @@ const App = () => {
   const style = {
     boxSizing: "border-box",
     height: "30px",
+    width: "150px",
     margin: "5px",
-    width: "200px",
     WebkitAppearance: "none",
     MozAppearance: "textfield",
   };
@@ -61,50 +61,60 @@ const App = () => {
       </div>
       <div>
         <input
-          style={style}
+          style={{ ...style, width: "50px" }}
           type="number"
           value={size}
           onChange={(e) => {
             setSize(parseInt(e.target.value));
           }}
         />
-        <select
-          style={style}
-          id="preset"
-          onChange={(e) => handlePreset(e)}
-          name="presets"
-        >
-          <option value="selected" defaultValue="selected">
-            Select a Preset
-          </option>
-          <option value="glider">Glider</option>
-          <option value="spaceship">Spaceship</option>
-          <option value="blinker">Blinker</option>
-        </select>
+        <input
+          type="range"
+          style={{ height: "9px", direction: "rtl" }}
+          value={speed}
+          min="0"
+          max="300"
+          onChange={(e) => setSpeed(parseInt(e.target.value))}
+        />
       </div>
-      <h2>Generation {generations}</h2>
-      <div ref={gridRef}>
-        {grid &&
-          grid.map((row, x) => {
-            return (
-              <div style={{ width: "100%" }} key={x}>
-                {row &&
-                  row.map((_, y) => {
-                    return (
-                      <Cell
-                        gridRef={gridRef}
-                        size={size}
-                        key={`${x}-${y}`}
-                        pos={{ x, y }}
-                        population={population}
-                        setPopulation={setPopulation}
-                      />
-                    );
-                  })}
-              </div>
-            );
-          })}
-      </div>
+      <select
+        style={style}
+        id="preset"
+        onChange={(e) => handlePreset(e)}
+        name="presets"
+      >
+        <option value="selected" defaultValue="selected">
+          Select a Preset
+        </option>
+        <option value="glider">Glider</option>
+        <option value="spaceship">Spaceship</option>
+        <option value="blinker">Blinker</option>
+      </select>
+      <section>
+        <h2>Generation {generations}</h2>
+        <div ref={gridRef}>
+          {grid &&
+            grid.map((row, x) => {
+              return (
+                <div style={{ width: "100%" }} key={x}>
+                  {row &&
+                    row.map((_, y) => {
+                      return (
+                        <Cell
+                          gridRef={gridRef}
+                          size={size}
+                          key={`${x}-${y}`}
+                          pos={{ x, y }}
+                          population={population}
+                          setPopulation={setPopulation}
+                        />
+                      );
+                    })}
+                </div>
+              );
+            })}
+        </div>
+      </section>
     </div>
   );
 };
