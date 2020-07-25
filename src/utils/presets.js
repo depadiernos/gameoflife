@@ -1,32 +1,42 @@
-const presets = {
-    selected: [],
-    glider: [
-      {x: 25, y: 24},
-      {x: 24, y: 24},
-      {x: 23, y: 24},
-      {x: 23, y: 23},
-      {x: 24, y: 22}
-    ],
-    spaceship: [
-      {x: 22, y: 20},
-      {x: 22, y: 21},
-      {x: 22, y: 22},
-      {x: 22, y: 23},
-      {x: 22, y: 24},
-      {x: 22, y: 25},
-      {x: 23, y: 25},
-      {x: 24, y: 25},
-      {x: 25, y: 24},
-      {x: 26, y: 22},
-      {x: 26, y: 21},
-      {x: 23, y: 19},
-      {x: 25, y: 19}
-    ],
-    blinker: [
-      {x: 23, y: 21},
-      {x: 23, y: 22},
-      {x: 23, y: 23}
-    ],
+const presets = (value, size) => {
+  const middle = ~~(size/2)
+  switch (value) {
+    case "glider":
+      return [
+        { x: middle, y: middle }, 
+        { x: middle-1, y: middle },
+        { x: middle-2, y: middle },
+        { x: middle-2, y: middle-1 },
+        { x: middle-1, y: middle-2 },
+      ];
+      break;
+    case "spaceship":
+      return [
+        { x: middle-2, y: middle-3 }, 
+        { x: middle-2, y: middle-2 },
+        { x: middle-2, y: middle-1 },
+        { x: middle-2, y: middle },
+        { x: middle-2, y: middle+1 },
+        { x: middle-2, y: middle+2 },
+        { x: middle-1, y: middle+2 },
+        { x: middle, y: middle+2 },
+        { x: middle+1, y: middle+1 },
+        { x: middle+2, y: middle-1 },
+        { x: middle+2, y: middle-2 },
+        { x: middle-1, y: middle-4 },
+        { x: middle+1, y: middle-4 },
+      ];
+      break;
+    case "blinker":
+      return [
+        { x: middle, y: middle-1 },
+        { x: middle, y: middle },
+        { x: middle, y: middle+1 },
+      ];
+      break;
+    default:
+      return [];
   }
+};
 
-  export default presets
+export default presets;
