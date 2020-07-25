@@ -21,7 +21,7 @@ const Cell = (props) => {
     boxSizing: "border-box",
     height: `${(gridSize - 10) / size}`,
     width: `${(gridSize - 10) / size}`,
-    border: "1px solid gray",
+    border: "0.5px solid gray",
     display: "inline-block",
     textAlign: "center",
   };
