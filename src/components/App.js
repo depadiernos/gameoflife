@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import nextGeneration from "../utils/nextGeneration";
 import expandPopulation from "../utils/expandPopulation";
-import presets from "../utils/presets";
 import Cell from "./Cell";
+import Controls from "./Controls"
 import About from "./About";
 
 const App = () => {
@@ -11,24 +11,10 @@ const App = () => {
   const [population, setPopulation] = useState([]);
   const [running, setRunning] = useState(false);
   const [speed, setSpeed] = useState(20);
-  const [preset, setPreset] = useState("selected");
   const [generations, setGenerations] = useState(0);
   const [grid, setGrid] = useState();
   const [show, setShow] = useState(false);
   const gridRef = useRef();
-
-  const style = {
-    boxSizing: "border-box",
-    height: "30px",
-    width: "49%",
-    margin: "2px",
-    WebkitAppearance: "none",
-    MozAppearance: "textfield",
-  };
-
-  const controlsStyle = {
-    width: "400px",
-  };
 
   useEffect(() => {
     if (size > 0) {
@@ -60,16 +46,6 @@ const App = () => {
     }
   });
 
-  const handlePreset = (e) => {
-    setPreset(e.target.value);
-    setPopulation([...presets(e.target.value, size)]);
-    setGenerations(0);
-  };
-
-  const handleStart = () => {
-    setRunning(!running);
-  };
-
   return (
     <div style={{ height: "100%" }}>
       <About show={show} setShow={setShow} />
@@ -89,59 +65,17 @@ const App = () => {
         >
           <span style={{ textAlign: "center" }}>Conway's Game of Life</span>
         </div>
-        <nav>
-          <div style={controlsStyle}>
-            <button style={style} onClick={handleStart}>
-              {!running ? `Start` : `Stop`}
-            </button>
-            <button
-              style={style}
-              onClick={() => {
-                setPreset("selected");
-                setPopulation([]);
-                setGenerations(0);
-              }}
-            >
-              Clear
-            </button>
-          </div>
-          <div style={{ ...controlsStyle }}>
-            <label style={{ marginLeft: "5px" }}>
-              Board Size
-              <input
-                style={{ ...style, width: "50px", marginLeft: "10px" }}
-                type="number"
-                value={JSON.stringify(size)}
-                onChange={(e) => {
-                  setSize(parseInt(e.target.value));
-                }}
-              />
-            </label>
-            <label style={{ marginLeft: "10px" }}>
-              Speed
-              <input
-                type="range"
-                style={{ height: "9px", direction: "rtl" }}
-                value={speed}
-                min="20"
-                max="200"
-                onChange={(e) => setSpeed(parseInt(e.target.value))}
-              />
-            </label>
-          </div>
-          <select
-            style={{ ...style, ...controlsStyle }}
-            id="preset"
-            value={preset}
-            onChange={(e) => handlePreset(e)}
-            name="presets"
-          >
-            <option value="selected">Select a Preset</option>
-            <option value="glider">Glider</option>
-            <option value="spaceship">Spaceship</option>
-            <option value="blinker">Blinker</option>
-          </select>
-        </nav>
+        <Controls 
+          setPopulation={setPopulation}
+          setGenerations={setGenerations}
+          setSize={setSize}
+          setRunning={setRunning}
+          running={running}
+          size={size}
+          setSize={setSize}
+          speed={speed}
+          setSpeed={setSpeed}
+        />
       </header>
 
       <section>
@@ -174,4 +108,4 @@ const App = () => {
   );
 };
 
-ReactDOM.render(<App />, document.querySelector("#app"));
+export default App

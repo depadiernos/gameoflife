@@ -4,17 +4,12 @@ import checkState from "../utils/checkState";
 const Cell = (props) => {
   const { gridRef, pos, population, setPopulation, size, running } = props;
 
-  const [gridSize, setGridSize] = useState();
   const minSize = () =>
-    window.innerWidth < window.innerHeight
-      ? setGridSize(window.innerWidth - 30)
-      : setGridSize(window.innerHeight - gridRef.current.offsetTop)
+    window.innerWidth < window.innerHeight - gridRef.current.offsetTop
+      ? window.innerWidth - 30
+      : window.innerHeight - gridRef.current.offsetTop
 
-
-  useEffect(()=>{
-    window.addEventListener("resize", minSize)
-    minSize()
-  },[])
+  const [gridSize, setGridSize] = useState(minSize());
 
   const style = {
     backgroundColor: `${checkState(population, pos) ? "black" : "white"}`,
@@ -23,7 +18,7 @@ const Cell = (props) => {
     width: `${(gridSize - 10) / size}`,
     border: "0.5px solid gray",
     display: "inline-block",
-    textAlign: "center",
+    margin: "0 auto",
   };
 
   const onClick = () => {
