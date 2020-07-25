@@ -1,14 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
-import Cell from './Cell'
+import nextGeneration from "../utils/nextGeneration";
+import expandPopulation from "../utils/expandPopulation";
+import checkState from "../utils/checkState";
+import presets from "../utils/presets";
+import Cell from "./Cell";
 
 const App = () => {
   const [size, setSize] = useState(50);
   const [population, setPopulation] = useState([]);
+  const [presetName, setPresetName] = useState("selected");
   const [running, setRunning] = useState(false);
   const [generations, setGenerations] = useState(0);
   const [grid, setGrid] = useState();
-  const gridRef = useRef()
+  const gridRef = useRef();
 
   const style = {
     boxSizing: "border-box",
@@ -30,42 +35,13 @@ const App = () => {
     setGrid(arr);
   }, [size]);
 
-  const expandPopulation = (cell) => {
-    const perimeter = [
-      { x: -1, y: 1 },
-      { x: 0, y: 1 },
-      { x: 1, y: 1 },
-      { x: -1, y: 0 },
-      { x: 0, y: 0 },
-      { x: 1, y: 0 },
-      { x: -1, y: -1 },
-      { x: 0, y: -1 },
-      { x: 1, y: -1 },
-    ];
-    return perimeter.map(({ x, y }) => {
-      return { x: cell.x + x, y: cell.y + y };
-    });
-  };
-
-  const newPopulation = (population) => {
-    const newPopulation = population.reduce((acc, index) => {
-      if (typeof acc[index] == "undefined") {
-        acc[index] = 1;
-      } else {
-        acc[index] += 1;
-      }
-      return acc;
-    }, {});
-    return Object.keys(newPopulation).filter((key) => {
-      return (
-        newPopulation[key] === 3 ||
-        (newPopulation[key] === 4 && population.include(key))
-      );
-    });
+  const handlePreset = (e) => {
+    setPopulation([...presets[e.target.value]]);
+    setPresetName(e.target.value);
   };
 
   return (
-    <div style={{height: "100%"}}>
+    <div style={{ height: "100%" }}>
       <div>
         <button
           style={style}
@@ -86,22 +62,30 @@ const App = () => {
             setSize(parseInt(e.target.value));
           }}
         />
-        <select style={style} id="preset" name="presets">
-          <option defaultValue="selected">Select a Preset</option>
-          <option value="glider">Volvo</option>
-          <option value="spaceship">Saab</option>
-          <option value="cross">Fiat</option>
-          <option value="blaster">Audi</option>
+        <select
+          style={style}
+          id="preset"
+          onChange={(e) => handlePreset(e)}
+          name="presets"
+        >
+          <option value="selected" defaultValue="selected">
+            Select a Preset
+          </option>
+          <option value="glider">Glider</option>
+          <option value="spaceship">Spaceship</option>
+          <option value="blinker">Blinker</option>
         </select>
       </div>
-      <div  ref={gridRef} >
-        {grid && grid.map((row, x) => {
+      <div ref={gridRef}>
+        {grid &&
+          grid.map((row, x) => {
             return (
-              <div style={{width: "100%",}} key={x}>
-                {row && 
+              <div style={{ width: "100%" }} key={x}>
+                {row &&
                   row.map((_, y) => {
                     return (
                       <Cell
+                        presetName={presetName}
                         gridRef={gridRef}
                         size={size}
                         key={`${x}-${y}`}
