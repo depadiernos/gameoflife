@@ -2,31 +2,22 @@ import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import nextGeneration from "../utils/nextGeneration";
 import expandPopulation from "../utils/expandPopulation";
+import newGrid from '../utils/newGrid'
 import Cell from "./Cell";
 import Controls from "./Controls"
 import About from "./About";
 
-const App = () => {
+const Board = () => {
   const [size, setSize] = useState(50);
   const [population, setPopulation] = useState([]);
   const [running, setRunning] = useState(false);
   const [speed, setSpeed] = useState(1);
   const [generations, setGenerations] = useState(0);
-  const [grid, setGrid] = useState();
+  const [grid, setGrid] = useState(newGrid(size));
   const [show, setShow] = useState(false);
-  const gridRef = useRef();
 
   useEffect(() => {
-    if (size > 0) {
-      let arr = new Array(size);
-      for (let i = 0; i < arr.length; i++) {
-        arr[i] = new Array(size);
-        for (let j = 0; j < size; j++) {
-          arr[i][j] = 0;
-        }
-      }
-      setGrid(arr);
-    }
+      setGrid(newGrid(size));
   }, [size]);
 
   useEffect(() => {
@@ -80,7 +71,7 @@ const App = () => {
 
       <section>
         <h2>Generation {generations}</h2>
-        <div ref={gridRef}>
+        <div>
           {grid &&
             grid.map((row, x) => {
               return (
@@ -90,7 +81,6 @@ const App = () => {
                       return (
                         <Cell
                           running={running}
-                          gridRef={gridRef}
                           size={size}
                           key={`${x}-${y}`}
                           pos={{ x, y }}
@@ -108,4 +98,4 @@ const App = () => {
   );
 };
 
-export default App
+export default Board

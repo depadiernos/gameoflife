@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
 import checkState from "../utils/checkState";
+import minSize from "../utils/minSize"
 
 const Cell = (props) => {
-  const { gridRef, pos, population, setPopulation, size, running } = props;
-
-  const minSize = () =>
-    window.innerWidth < window.innerHeight - gridRef.current.offsetTop
-      ? window.innerWidth - 30
-      : window.innerHeight - gridRef.current.offsetTop
+  const { pos, population, setPopulation, size, running } = props;
 
   const [gridSize, setGridSize] = useState(minSize());
 
@@ -35,4 +31,4 @@ const Cell = (props) => {
   return <div style={style} onClick={!running ? onClick : null}></div>;
 };
 
-export default Cell;
+export default React.memo(Cell);

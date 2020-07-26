@@ -1,13 +1,13 @@
 import React from "react"
 import ReactDOM from 'react-dom'
-import App from "./components/App"
+import Board from "./components/Board"
 
-const Root = () => {
+const app = () => {
     return (
     <div>
-        <App/>
+        <Board/>
     </div>
     )
 }
 
-ReactDOM.render(<Root />, document.querySelector("#app"));
+ReactDOM.render(app(), document.querySelector("#app"));
