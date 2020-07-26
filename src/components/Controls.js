@@ -62,7 +62,7 @@ const Controls = (props) => {
           <input
             style={{ height: "9px", marginLeft: "10px" }}
             type="range"
-            min="20"
+            min="25"
             max="100"
             value={JSON.stringify(size)}
             onChange={(e) => {
@@ -76,7 +76,7 @@ const Controls = (props) => {
             type="range"
             style={{ height: "9px", direction: "rtl" }}
             value={speed}
-            min="10"
+            min="1"
             max="200"
             onChange={(e) => setSpeed(parseInt(e.target.value))}
           />
