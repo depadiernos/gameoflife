@@ -60,15 +60,17 @@ const Controls = (props) => {
         <label style={{ marginLeft: "5px" }}>
           Board Size
           <input
-            style={{ ...style, width: "50px", marginLeft: "10px" }}
-            type="number"
+            style={{ height: "9px", marginLeft: "10px" }}
+            type="range"
+            min="20"
+            max="100"
             value={JSON.stringify(size)}
             onChange={(e) => {
               setSize(parseInt(e.target.value));
             }}
           />
-        </label>
-        <label style={{ marginLeft: "10px" }}>
+        </label><br/>
+        <label style={{ marginLeft: "5px" }}>
           Speed
           <input
             type="range"
