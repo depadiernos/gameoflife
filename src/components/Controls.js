@@ -91,6 +91,7 @@ const Controls = (props) => {
         <option value="glider">Glider</option>
         <option value="spaceship">Spaceship</option>
         <option value="blinker">Blinker</option>
+        <option value="glidergun">Glider Gun</option>
       </select>
     </nav>
   );
