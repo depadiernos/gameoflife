@@ -74,7 +74,7 @@ const Controls = (props) => {
             type="range"
             style={{ height: "9px", direction: "rtl" }}
             value={speed}
-            min="20"
+            min="10"
             max="200"
             onChange={(e) => setSpeed(parseInt(e.target.value))}
           />

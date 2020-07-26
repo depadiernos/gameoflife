@@ -10,7 +10,7 @@ const App = () => {
   const [size, setSize] = useState(50);
   const [population, setPopulation] = useState([]);
   const [running, setRunning] = useState(false);
-  const [speed, setSpeed] = useState(20);
+  const [speed, setSpeed] = useState(10);
   const [generations, setGenerations] = useState(0);
   const [grid, setGrid] = useState();
   const [show, setShow] = useState(false);
