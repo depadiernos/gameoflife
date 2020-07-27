@@ -36,7 +36,7 @@ const About = (props) => {
         <h2>The Game of Life</h2>
         <p>
           Also known simply as Life, is a cellular automaton devised by the
-          British mathematician John Horton Conway in 1970.It is a zero-player
+          British mathematician John Horton Conway in 1970. It is a zero-player
           game, meaning that its evolution is determined by its initial state,
           requiring no further input. One interacts with the Game of Life by
           creating an initial configuration and observing how it evolves. It is
@@ -48,32 +48,32 @@ const About = (props) => {
           The universe of the Game of Life is an infinite, two-dimensional
           orthogonal grid of square cells, each of which is in one of two
           possible states, live or dead, (or populated and unpopulated,
-          respectively). Every cell interacts with its eight neighbours, which
+          respectively). Every cell interacts with its eight neighbors, which
           are the cells that are horizontally, vertically, or diagonally
           adjacent. At each step in time, the following transitions occur:
         </p>
         <ul>
           <li>
-            Any live cell with fewer than two live neighbours dies, as if by
+            Any live cell with fewer than two live neighbors dies, as if by
             underpopulation.
           </li>
           <li>
-            Any live cell with two or three live neighbours lives on to the next
+            Any live cell with two or three live neighbors lives on to the next
             generation.
           </li>
           <li>
-            Any live cell with more than three live neighbours dies, as if by
+            Any live cell with more than three live neighbors dies, as if by
             overpopulation.
           </li>
           <li>
-            Any dead cell with exactly three live neighbours becomes a live
+            Any dead cell with exactly three live neighbors becomes a live
             cell, as if by reproduction.
           </li>
         </ul>
         <p>
           These rules, which compare the behavior of the automaton to real life,
           can be condensed into the following: Any live cell with two or three
-          live neighbours survives. Any dead cell with three live neighbours
+          live neighbors survives. Any dead cell with three live neighbors
           becomes a live cell. All other live cells die in the next generation.
           Similarly, all other dead cells stay dead. The initial pattern
           constitutes the seed of the system. The first generation is created by

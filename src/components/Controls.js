@@ -59,7 +59,7 @@ const Controls = (props) => {
       </div>
       <div style={{ ...controlsStyle }}>
         <label style={{ marginLeft: "5px" }}>
-          Board Size
+          Board Resolution
           <input
             style={{ height: "9px", marginLeft: "10px" }}
             type="range"
