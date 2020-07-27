@@ -36,6 +36,7 @@ const Controls = (props) => {
   };
 
   const handleStart = () => {
+    setPreset("selected")
     setRunning(!running);
   };
 
